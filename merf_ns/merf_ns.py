@@ -278,23 +278,23 @@ class MeRFNSModel(NerfactoModel):
         density = field_outputs[MeRFNSFieldHeadNames.DENSITY]
         # print(density.shape)
         nowDensity = torch.squeeze(density[nowSample])
-        for index in range(len(nowDensity)):
-            nowtag = "density"+str(index)
-            writer.add_scalar(tag=nowtag, # 标签，即数据属于哪一类，不同的标签对应不同的图
-                        scalar_value=nowDensity[index],  # 纵坐标的值
-                        global_step=self.step  # 迭代次数，即图的横坐标
-                        )
+        # for index in range(len(nowDensity)):
+        #     nowtag = "density"+str(index)
+        #     writer.add_scalar(tag=nowtag, # 标签，即数据属于哪一类，不同的标签对应不同的图
+        #                 scalar_value=nowDensity[index],  # 纵坐标的值
+        #                 global_step=self.step  # 迭代次数，即图的横坐标
+        #                 )
         # 输出第64序raysample的weights到tensorboard
         # print(ray_bundle.shape)->128
         # print(weights)->128,48,1
         # print(weights[64].shape)
-        nowWeights = torch.squeeze(weights[nowSample])
-        for index in range(len(nowWeights)):
-            nowtag = "weight"+str(index)
-            writer.add_scalar(tag=nowtag, # 标签，即数据属于哪一类，不同的标签对应不同的图
-                        scalar_value=nowWeights[index],  # 纵坐标的值
-                        global_step=self.step  # 迭代次数，即图的横坐标
-                        )
+        # nowWeights = torch.squeeze(weights[nowSample])
+        # for index in range(len(nowWeights)):
+        #     nowtag = "weight"+str(index)
+        #     writer.add_scalar(tag=nowtag, # 标签，即数据属于哪一类，不同的标签对应不同的图
+        #                 scalar_value=nowWeights[index],  # 纵坐标的值
+        #                 global_step=self.step  # 迭代次数，即图的横坐标
+        #                 )
 
         weights_list.append(weights)
         ray_samples_list.append(ray_samples)
@@ -341,7 +341,7 @@ class MeRFNSModel(NerfactoModel):
         #         field_outputs[MeRFNSFieldHeadNames.NORMALS].detach(),
         #         field_outputs[MeRFNSFieldHeadNames.PRED_NORMALS],
         #     )
-# 这个地方把propo的depth保存出来了？
+        # 这个地方把propo的depth保存出来了？
         for i in range(self.config.num_proposal_iterations):
             outputs[f"prop_depth_{i}"] = self.renderer_depth(
                 weights=weights_list[i], ray_samples=ray_samples_list[i])
